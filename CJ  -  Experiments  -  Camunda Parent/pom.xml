@@ -18,6 +18,6 @@
 	</properties>
 	
 	<modules>
-		<module>01-simple</module>
+	<module>camunda-01-simple</module>
 	</modules>
 </project>

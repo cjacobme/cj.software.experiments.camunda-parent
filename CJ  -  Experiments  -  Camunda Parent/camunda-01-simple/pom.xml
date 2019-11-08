@@ -5,7 +5,7 @@
     <artifactId>camunda-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>01-simple</artifactId>
-  <name>CJ  -  Experiments  -  01 Simple</name>
-  <description>first simple camunda project</description>
+  <artifactId>camunda-01-simple</artifactId>
+  <name>CJ  -  Experiments  - Camunda 01 Simple</name>
+  <description>First experiment with Camunda</description>
 </project>
