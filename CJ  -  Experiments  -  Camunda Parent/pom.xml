@@ -16,8 +16,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<modules>
-	<module>camunda-01-simple</module>
+		<module>camunda-01-simple</module>
 	</modules>
 </project>
