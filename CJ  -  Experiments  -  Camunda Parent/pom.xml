@@ -19,5 +19,6 @@
 
 	<modules>
 		<module>camunda-01-simple</module>
+		<module>02-timer</module>
 	</modules>
 </project>
