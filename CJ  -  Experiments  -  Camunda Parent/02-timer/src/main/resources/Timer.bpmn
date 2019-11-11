@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_TimestampReached" name="Timestamp reached">
       <bpmn:outgoing>SequenceFlow_1tup9vj</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">0/10 * * * * ?</bpmn:timeCycle>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">${timerSettings.getCronSettings()}</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1tup9vj" sourceRef="StartEvent_TimestampReached" targetRef="Task_Notification" />
