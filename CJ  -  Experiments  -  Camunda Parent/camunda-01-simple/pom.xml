@@ -11,7 +11,7 @@
 
 	<artifactId>camunda-01-simple</artifactId>
 
-	<name>CJ  -  Experiments  - Camunda 01 Simple</name>
+	<name>CJ  -  Experiments  -  Camunda 01 Simple</name>
 	<description>First experiment with Camunda</description>
 
 	<properties>
