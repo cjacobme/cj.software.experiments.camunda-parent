@@ -5,3 +5,7 @@ camunda.bpm:
     firstName: Kermit
   filter:
     create: All tasks
+
+cj.software.camunda.monitoring:
+   cron-settings: 10 * * * * ?
+   download-url: http://www.nasa.gov

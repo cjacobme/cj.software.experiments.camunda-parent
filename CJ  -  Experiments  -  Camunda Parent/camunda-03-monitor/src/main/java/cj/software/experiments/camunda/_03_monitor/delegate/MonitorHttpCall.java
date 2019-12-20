@@ -1,5 +1,7 @@
 package cj.software.experiments.camunda._03_monitor.delegate;
 
+import java.net.URL;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ public class MonitorHttpCall
 	@Override
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
-		String lURL = (String) pExecution.getVariable("URL");
+		URL lURL = (URL) pExecution.getVariable("URL");
 		this.logger.info("call {}", lURL);
 		boolean lResult = this.downloader.download(lURL);
 		this.logger.info("success is {}", lResult);

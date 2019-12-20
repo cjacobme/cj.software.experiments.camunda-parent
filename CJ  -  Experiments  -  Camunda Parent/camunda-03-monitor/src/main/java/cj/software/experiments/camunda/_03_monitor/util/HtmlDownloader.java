@@ -2,6 +2,7 @@ package cj.software.experiments.camunda._03_monitor.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,10 @@ public class HtmlDownloader
 {
 	private Logger logger = LoggerFactory.getLogger(HtmlDownloader.class);
 
-	public boolean download(String pURI) throws URISyntaxException
+	public boolean download(URL pURL) throws URISyntaxException
 	{
 		RestTemplate lRestTemplate = new RestTemplate();
-		URI lURI = new URI(pURI);
+		URI lURI = pURL.toURI();
 		ResponseEntity<String> lResponse = lRestTemplate.getForEntity(lURI, String.class);
 		int lStatusCodeValue = lResponse.getStatusCodeValue();
 		int lStatusCodeFamily = lStatusCodeValue / 100;
@@ -27,7 +28,7 @@ public class HtmlDownloader
 			String lReasonPhrase = lResponse.getStatusCode().getReasonPhrase();
 			this.logger.error(
 					"download for {} failed: {} {}",
-					pURI,
+					pURL,
 					lStatusCodeValue,
 					lReasonPhrase);
 			lResult = false;
