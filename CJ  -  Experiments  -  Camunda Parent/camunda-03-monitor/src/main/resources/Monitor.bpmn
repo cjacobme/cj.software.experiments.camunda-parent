@@ -4,8 +4,8 @@
     <bpmn:startEvent id="TheStart" name="Start">
       <bpmn:outgoing>SequenceFlow_0h9ctbw</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0h9ctbw" sourceRef="TheStart" targetRef="monitor-Nasa" />
-    <bpmn:serviceTask id="monitor-Nasa" name="Monitor-Nasa" camunda:class="cj.software.experiments.camunda._03_monitor.delegate.MonitorHttpCall">
+    <bpmn:sequenceFlow id="SequenceFlow_0h9ctbw" sourceRef="TheStart" targetRef="http-Call" />
+    <bpmn:serviceTask id="http-Call" name="Call HTTP" camunda:class="cj.software.experiments.camunda._03_monitor.delegate.MonitorHttpCall">
       <bpmn:incoming>SequenceFlow_0h9ctbw</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1nidsry</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_19cfrn3</bpmn:outgoing>
@@ -23,20 +23,22 @@
       <bpmn:outgoing>SequenceFlow_0fcs8o8</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="nasa-not-succeeded" name="no" sourceRef="ExclusiveGateway_Successful" targetRef="Task_05rfwyr">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not nasaOk}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not httpCallOk}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1nrm4y2">
       <bpmn:incoming>SequenceFlow_1kj2ocl</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_08f0ffy</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_08f0ffy" sourceRef="ExclusiveGateway_1nrm4y2" targetRef="EndEvent_1u05kf5" />
-    <bpmn:sequenceFlow id="SequenceFlow_1nidsry" sourceRef="Task_05rfwyr" targetRef="monitor-Nasa" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nidsry" sourceRef="Task_05rfwyr" targetRef="http-Call" />
     <bpmn:userTask id="Task_05rfwyr" name="failed">
       <bpmn:incoming>nasa-not-succeeded</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nidsry</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_19cfrn3" sourceRef="monitor-Nasa" targetRef="ExclusiveGateway_Successful" />
-    <bpmn:sequenceFlow id="SequenceFlow_0fcs8o8" sourceRef="ExclusiveGateway_Successful" targetRef="Task_0lr43uw" />
+    <bpmn:sequenceFlow id="SequenceFlow_19cfrn3" sourceRef="http-Call" targetRef="ExclusiveGateway_Successful" />
+    <bpmn:sequenceFlow id="SequenceFlow_0fcs8o8" name="yes" sourceRef="ExclusiveGateway_Successful" targetRef="Task_0lr43uw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{httpCallOk}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1kj2ocl" sourceRef="Task_0lr43uw" targetRef="ExclusiveGateway_1nrm4y2" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -51,7 +53,7 @@
         <di:waypoint x="188" y="114" />
         <di:waypoint x="278" y="114" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0uxqyp9_di" bpmnElement="monitor-Nasa">
+      <bpmndi:BPMNShape id="ServiceTask_0uxqyp9_di" bpmnElement="http-Call">
         <dc:Bounds x="278" y="74" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1u05kf5_di" bpmnElement="EndEvent_1u05kf5">
@@ -98,6 +100,9 @@
       <bpmndi:BPMNEdge id="SequenceFlow_0fcs8o8_di" bpmnElement="SequenceFlow_0fcs8o8">
         <di:waypoint x="523" y="114" />
         <di:waypoint x="618" y="114" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="562" y="96" width="17" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1kj2ocl_di" bpmnElement="SequenceFlow_1kj2ocl">
         <di:waypoint x="718" y="114" />
