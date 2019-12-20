@@ -7,7 +7,7 @@ camunda.bpm:
     create: All tasks
 
   database:
-    schema-update: true
+    schema-update: false
     type: postgres
 
 cj.software.camunda.monitoring:
