@@ -1,0 +1,7 @@
+camunda.bpm:
+  admin-user:
+    id: k
+    password: k
+    firstName: Kermit
+  filter:
+    create: All tasks

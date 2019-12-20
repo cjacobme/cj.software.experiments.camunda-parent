@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_012z67k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
+  <bpmn:process id="MonitorProcess" name="Monitor Process" isExecutable="true">
+    <bpmn:startEvent id="TheStart" name="Start">
+      <bpmn:outgoing>SequenceFlow_0h9ctbw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0h9ctbw" sourceRef="TheStart" targetRef="monitor-Nasa" />
+    <bpmn:serviceTask id="monitor-Nasa" name="Monitor-Nasa" camunda:class="cj.software.experiments.camunda._03_monitor.delegate.MonitorHttpCall">
+      <bpmn:incoming>SequenceFlow_0h9ctbw</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1nidsry</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19cfrn3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_1u05kf5" name="NASA could be contacted">
+      <bpmn:incoming>SequenceFlow_08f0ffy</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_0lr43uw" name="succeeded">
+      <bpmn:incoming>SequenceFlow_0fcs8o8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1kj2ocl</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_Successful" name="successful call?">
+      <bpmn:incoming>SequenceFlow_19cfrn3</bpmn:incoming>
+      <bpmn:outgoing>nasa-not-succeeded</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0fcs8o8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="nasa-not-succeeded" name="no" sourceRef="ExclusiveGateway_Successful" targetRef="Task_05rfwyr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not nasaOk}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1nrm4y2">
+      <bpmn:incoming>SequenceFlow_1kj2ocl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_08f0ffy</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_08f0ffy" sourceRef="ExclusiveGateway_1nrm4y2" targetRef="EndEvent_1u05kf5" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nidsry" sourceRef="Task_05rfwyr" targetRef="monitor-Nasa" />
+    <bpmn:userTask id="Task_05rfwyr" name="failed">
+      <bpmn:incoming>nasa-not-succeeded</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1nidsry</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_19cfrn3" sourceRef="monitor-Nasa" targetRef="ExclusiveGateway_Successful" />
+    <bpmn:sequenceFlow id="SequenceFlow_0fcs8o8" sourceRef="ExclusiveGateway_Successful" targetRef="Task_0lr43uw" />
+    <bpmn:sequenceFlow id="SequenceFlow_1kj2ocl" sourceRef="Task_0lr43uw" targetRef="ExclusiveGateway_1nrm4y2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MonitorProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="TheStart">
+        <dc:Bounds x="152" y="96" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="158" y="139" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0h9ctbw_di" bpmnElement="SequenceFlow_0h9ctbw">
+        <di:waypoint x="188" y="114" />
+        <di:waypoint x="278" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0uxqyp9_di" bpmnElement="monitor-Nasa">
+        <dc:Bounds x="278" y="74" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1u05kf5_di" bpmnElement="EndEvent_1u05kf5">
+        <dc:Bounds x="952" y="96" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="933" y="139" width="75" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0to6hor_di" bpmnElement="Task_0lr43uw">
+        <dc:Bounds x="618" y="74" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1agaav7_di" bpmnElement="ExclusiveGateway_Successful" isMarkerVisible="true">
+        <dc:Bounds x="473" y="89" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="460" y="59" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_13nwppg_di" bpmnElement="nasa-not-succeeded">
+        <di:waypoint x="498" y="139" />
+        <di:waypoint x="498" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="507" y="177" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1nrm4y2_di" bpmnElement="ExclusiveGateway_1nrm4y2" isMarkerVisible="true">
+        <dc:Bounds x="813" y="89" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_08f0ffy_di" bpmnElement="SequenceFlow_08f0ffy">
+        <di:waypoint x="863" y="114" />
+        <di:waypoint x="952" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nidsry_di" bpmnElement="SequenceFlow_1nidsry">
+        <di:waypoint x="448" y="280" />
+        <di:waypoint x="328" y="280" />
+        <di:waypoint x="328" y="154" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_12hrdag_di" bpmnElement="Task_05rfwyr">
+        <dc:Bounds x="448" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_19cfrn3_di" bpmnElement="SequenceFlow_19cfrn3">
+        <di:waypoint x="378" y="114" />
+        <di:waypoint x="473" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0fcs8o8_di" bpmnElement="SequenceFlow_0fcs8o8">
+        <di:waypoint x="523" y="114" />
+        <di:waypoint x="618" y="114" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1kj2ocl_di" bpmnElement="SequenceFlow_1kj2ocl">
+        <di:waypoint x="718" y="114" />
+        <di:waypoint x="813" y="114" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
