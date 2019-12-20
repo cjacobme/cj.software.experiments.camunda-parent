@@ -6,6 +6,20 @@ camunda.bpm:
   filter:
     create: All tasks
 
+  database:
+    schema-update: true
+    type: postgres
+
 cj.software.camunda.monitoring:
    cron-settings: 10 * * * * ?
-   download-url: http://www.nasa.gov
+   download-url: https://www.nasa.gov
+
+  
+spring.main:
+  allow-bean-definition-overriding: true
+  
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/camunda
+  driverClassName: org.postgresql.Driver
+  username: camunda
+  password: camunda
