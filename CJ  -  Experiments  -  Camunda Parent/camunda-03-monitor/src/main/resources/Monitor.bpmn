@@ -29,12 +29,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_0fcs8o8" name="yes" sourceRef="ExclusiveGateway_Successful" targetRef="ExclusiveGateway_0l56k93">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{httpCallOk}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:startEvent id="StartEvent_1tnfmrg" name="cron-based starter">
-      <bpmn:outgoing>SequenceFlow_1rlpxjy</bpmn:outgoing>
-      <bpmn:timerEventDefinition>
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">${configurationHolder.getCronSettings()}</bpmn:timeCycle>
-      </bpmn:timerEventDefinition>
-    </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1rlpxjy" sourceRef="StartEvent_1tnfmrg" targetRef="http-Call" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0l56k93">
       <bpmn:incoming>SequenceFlow_0s0ptr7</bpmn:incoming>
@@ -43,6 +37,9 @@
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_199gom7" sourceRef="ExclusiveGateway_0l56k93" targetRef="EndEvent_1u05kf5" />
     <bpmn:sequenceFlow id="SequenceFlow_0s0ptr7" sourceRef="Task_05rfwyr" targetRef="ExclusiveGateway_0l56k93" />
+    <bpmn:startEvent id="StartEvent_1tnfmrg" name="cron-based starter">
+      <bpmn:outgoing>SequenceFlow_1rlpxjy</bpmn:outgoing>
+    </bpmn:startEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MonitorProcess">
@@ -83,12 +80,6 @@
           <dc:Bounds x="598" y="96" width="17" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="StartEvent_0s0pwmj_di" bpmnElement="StartEvent_1tnfmrg">
-        <dc:Bounds x="152" y="96" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="142" y="139" width="56" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1rlpxjy_di" bpmnElement="SequenceFlow_1rlpxjy">
         <di:waypoint x="188" y="114" />
         <di:waypoint x="300" y="114" />
@@ -105,6 +96,12 @@
         <di:waypoint x="840" y="280" />
         <di:waypoint x="840" y="139" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_097afsi_di" bpmnElement="StartEvent_1tnfmrg">
+        <dc:Bounds x="152" y="96" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="142" y="139" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
