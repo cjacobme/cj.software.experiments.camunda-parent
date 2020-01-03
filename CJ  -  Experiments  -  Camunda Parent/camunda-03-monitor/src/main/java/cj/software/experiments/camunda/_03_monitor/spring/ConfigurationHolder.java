@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "cj.software.camunda.monitoring")
 @Validated
 public class ConfigurationHolder
