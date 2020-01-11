@@ -21,5 +21,6 @@
 		<module>camunda-01-simple</module>
 		<module>02-timer</module>
 		<module>camunda-03-monitor</module>
+		<module>04-messaging</module>
 	</modules>
 </project>
