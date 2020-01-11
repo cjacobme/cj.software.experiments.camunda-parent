@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
  * sends the request to the service provider
  */
 @Component
-public class MessageSender
+public class RequestSender
 		implements
 		JavaDelegate
 {
-	private Logger logger = LoggerFactory.getLogger(MessageSender.class);
+	private Logger logger = LoggerFactory.getLogger(RequestSender.class);
 
 	@Autowired
 	private RuntimeService runtimeService;
@@ -25,10 +25,14 @@ public class MessageSender
 	@Override
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
+		String lSender = (String) pExecution.getVariable("sender");
+		String lContent = (String) pExecution.getVariable("content");
+		this.logger.info("sender {}, content {}", lSender, lContent);
 		this.logger.info("send message now...");
 		MessageCorrelationResult lCorrelateWithResult = this.runtimeService
 				.createMessageCorrelation("Service Requested")
-				.setVariable("request", "help me")
+				.setVariable("sender", lSender)
+				.setVariable("content", lContent)
 				.correlateWithResult();
 		this.logger.info(
 				"message was sent: {} {}",

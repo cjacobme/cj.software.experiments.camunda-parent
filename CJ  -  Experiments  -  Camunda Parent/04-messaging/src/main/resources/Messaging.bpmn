@@ -18,7 +18,7 @@
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_ReturnResponse" name="Return Response">
       <bpmn:incoming>SequenceFlow_0ejx19m</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0xuc2tv</bpmn:outgoing>
-      <bpmn:messageEventDefinition messageRef="Message_0efkhe4" />
+      <bpmn:messageEventDefinition messageRef="Message_0efkhe4" camunda:class="cj.software.experiments.camunda_04_messaging.ResponseSender" />
     </bpmn:intermediateThrowEvent>
     <bpmn:endEvent id="EndEvent_0e2j7gy" name="Request Processed">
       <bpmn:incoming>SequenceFlow_0xuc2tv</bpmn:incoming>
@@ -28,14 +28,14 @@
     <bpmn:sequenceFlow id="SequenceFlow_0xuc2tv" sourceRef="IntermediateThrowEvent_ReturnResponse" targetRef="EndEvent_0e2j7gy" />
   </bpmn:process>
   <bpmn:process id="Process_Client" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_StartRequestProcess" name="Start Request Process">
+    <bpmn:startEvent id="StartEvent_StartRequestProcess" name="Start Request Process" camunda:formKey="embedded:app:forms/request.html">
       <bpmn:outgoing>SequenceFlow_1f1psqb</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_SendRequest" name="Send Request">
       <bpmn:documentation>With this event, the service request will be sent to the service provider</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_1f1psqb</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0k88de1</bpmn:outgoing>
-      <bpmn:messageEventDefinition messageRef="Message_0vl5sm1" camunda:class="cj.software.experiments.camunda_04_messaging.MessageSender" />
+      <bpmn:messageEventDefinition messageRef="Message_0vl5sm1" camunda:class="cj.software.experiments.camunda_04_messaging.RequestSender" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_ReceiveResponse" name="Receive Response">
       <bpmn:incoming>SequenceFlow_0k88de1</bpmn:incoming>
