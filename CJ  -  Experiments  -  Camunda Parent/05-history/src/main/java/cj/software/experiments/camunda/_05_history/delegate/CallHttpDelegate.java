@@ -25,7 +25,9 @@ public class CallHttpDelegate
 		this.logger.info("call {}", lURL);
 		HtmlDownloader lDownloader = new HtmlDownloader();
 		String lDownloaded = lDownloader.download(lURL);
-		this.logger.info("success has length {}", lDownloaded.length());
+		int lLength = lDownloaded.length();
+		this.logger.info("success has length {}", lLength);
+		pExecution.setVariable("contentLength", lLength);
 	}
 
 }
