@@ -22,5 +22,6 @@
 		<module>02-timer</module>
 		<module>camunda-03-monitor</module>
 		<module>04-messaging</module>
+		<module>05-history</module>
 	</modules>
 </project>
