@@ -3,20 +3,15 @@
   <bpmn:message id="Message_0vl5sm1" name="Service Requested" />
   <bpmn:message id="Message_0efkhe4" name="Response" />
   <bpmn:process id="Process_DownloadHttp" name="Download http" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_StartDownload" name="Start Download">
+    <bpmn:startEvent id="StartEvent_StartDownload" name="Start Download" camunda:formKey="embedded:app:forms/enterUrl.html">
       <bpmn:outgoing>SequenceFlow_1tlsa9r</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1tlsa9r" sourceRef="StartEvent_StartDownload" targetRef="UserTask_EnterURL" />
-    <bpmn:userTask id="UserTask_EnterURL" name="Enter URL">
-      <bpmn:incoming>SequenceFlow_1tlsa9r</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0efoi53</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0efoi53" sourceRef="UserTask_EnterURL" targetRef="ServiceTask_HttpGet" />
+    <bpmn:sequenceFlow id="SequenceFlow_1tlsa9r" sourceRef="StartEvent_StartDownload" targetRef="ServiceTask_HttpGet" />
     <bpmn:serviceTask id="ServiceTask_HttpGet" name="http GET" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._05_history.delegate.CallHttpDelegate">
       <bpmn:extensionElements>
         <camunda:failedJobRetryTimeCycle>R1/PT5S</camunda:failedJobRetryTimeCycle>
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0efoi53</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1tlsa9r</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0zhnisb</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_0zhnisb" sourceRef="ServiceTask_HttpGet" targetRef="ScriptTask_NotifyFinished" />
@@ -33,41 +28,34 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_DownloadHttp">
       <bpmndi:BPMNShape id="StartEvent_09bnzxy_di" bpmnElement="StartEvent_StartDownload">
-        <dc:Bounds x="192" y="102" width="36" height="36" />
+        <dc:Bounds x="172" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="174" y="145" width="76" height="14" />
+          <dc:Bounds x="154" y="145" width="76" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1tlsa9r_di" bpmnElement="SequenceFlow_1tlsa9r">
-        <di:waypoint x="228" y="120" />
-        <di:waypoint x="280" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1v2xtve_di" bpmnElement="UserTask_EnterURL">
-        <dc:Bounds x="280" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0efoi53_di" bpmnElement="SequenceFlow_0efoi53">
-        <di:waypoint x="380" y="120" />
-        <di:waypoint x="440" y="120" />
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="270" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0r1auce_di" bpmnElement="ServiceTask_HttpGet">
-        <dc:Bounds x="440" y="80" width="100" height="80" />
+        <dc:Bounds x="270" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0zhnisb_di" bpmnElement="SequenceFlow_0zhnisb">
-        <di:waypoint x="540" y="120" />
-        <di:waypoint x="600" y="120" />
+        <di:waypoint x="370" y="120" />
+        <di:waypoint x="430" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ScriptTask_0ngaccg_di" bpmnElement="ScriptTask_NotifyFinished">
-        <dc:Bounds x="600" y="80" width="100" height="80" />
+        <dc:Bounds x="430" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_04x12zw_di" bpmnElement="EndEvent_Happy">
-        <dc:Bounds x="762" y="102" width="36" height="36" />
+        <dc:Bounds x="592" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="753" y="145" width="55" height="14" />
+          <dc:Bounds x="583" y="145" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_09ikixb_di" bpmnElement="SequenceFlow_09ikixb">
-        <di:waypoint x="700" y="120" />
-        <di:waypoint x="762" y="120" />
+        <di:waypoint x="530" y="120" />
+        <di:waypoint x="592" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
