@@ -16,6 +16,8 @@ public class CheckedResource
 
 	private String selectStatement;
 
+	private String resourceUrl;
+
 	private long limit;
 
 	public String getDatabaseConnection()
@@ -66,5 +68,15 @@ public class CheckedResource
 	public void setLimit(long pLimit)
 	{
 		this.limit = pLimit;
+	}
+
+	public String getResourceUrl()
+	{
+		return this.resourceUrl;
+	}
+
+	public void setResourceUrl(String pResourceUrl)
+	{
+		this.resourceUrl = pResourceUrl;
 	}
 }

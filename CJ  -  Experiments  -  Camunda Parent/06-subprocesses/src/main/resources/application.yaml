@@ -14,12 +14,14 @@ to-be-checked:
       password: acceptance
       selectStatement: select count(*) from alert
       limit: 3
+      resource-url: https://www.berlin-recycling-volleys.de/index.php/de/
     experiments-trigger:
       databaseConnection: jdbc:postgresql:experiments
       user: experiments
       password: experiments
       selectStatement: select count(*) from cjtrigger where state = 'failed'
       limit: 0
+      resource-url: https://www.chiefs.com
 input:
   name: raja
   age: 12
