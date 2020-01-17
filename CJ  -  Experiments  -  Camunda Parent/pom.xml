@@ -23,5 +23,6 @@
 		<module>camunda-03-monitor</module>
 		<module>04-messaging</module>
 		<module>05-history</module>
+		<module>06-subprocesses</module>
 	</modules>
 </project>
