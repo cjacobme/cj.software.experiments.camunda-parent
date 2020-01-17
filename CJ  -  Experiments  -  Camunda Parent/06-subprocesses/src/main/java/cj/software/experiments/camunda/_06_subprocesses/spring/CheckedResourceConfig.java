@@ -15,11 +15,6 @@ public class CheckedResourceConfig
 {
 	private HashMap<String, CheckedResource> entries;
 
-	public HashMap<String, CheckedResource> getEntries()
-	{
-		return this.entries;
-	}
-
 	public void setEntries(HashMap<String, CheckedResource> pEntries)
 	{
 		this.entries = pEntries;
