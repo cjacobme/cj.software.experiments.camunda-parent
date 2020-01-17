@@ -13,7 +13,7 @@
 	<groupId>cj.software.experiments</groupId>
 	<artifactId>05-history</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CJ  -  Experiments  -  Camunda 04 Messaging</name>
+	<name>CJ  -  Experiments  -  Camunda 05 History</name>
 
 	<description>Example to demonstrate messaging between different processes</description>
 	<properties>
