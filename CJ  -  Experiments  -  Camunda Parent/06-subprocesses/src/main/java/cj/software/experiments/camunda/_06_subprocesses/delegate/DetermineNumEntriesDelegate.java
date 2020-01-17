@@ -39,11 +39,10 @@ public class DetermineNumEntriesDelegate
 		}
 
 		long lNumEntries = this.numEntriesReader.readNumEntries(lCorrelationId, lCheckedResource);
-		this.logger.info(
-				"{}: found {} entries, limit is {}",
-				lCorrelationId,
-				lNumEntries,
-				lCheckedResource.getLimit());
+		long lLimit = lCheckedResource.getLimit();
+		this.logger.info("{}: found {} entries, limit is {}", lCorrelationId, lNumEntries, lLimit);
+		pExecution.setVariableLocal("numEntries", lNumEntries);
+		pExecution.setVariableLocal("limit", lLimit);
 	}
 
 }
