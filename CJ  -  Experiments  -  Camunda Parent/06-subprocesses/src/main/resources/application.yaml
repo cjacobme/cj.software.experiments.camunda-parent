@@ -5,3 +5,25 @@ camunda.bpm:
     firstName: Kermit
   filter:
     create: All tasks
+
+to-be-checked:
+  entries:
+    acceptance:
+      databaseConnection: jdbc:postgresql:acceptance
+      user: acceptance
+      password: acceptance
+      selectStatement: select count(*) from alert
+      limit: 3
+    experiments-trigger:
+      databaseConnection: jdbc:postgresql:experiments
+      user: experiments
+      password: experiments
+      selectStatement: select count(*) from cjtrigger where state = 'failed'
+      limit: 0
+input:
+  name: raja
+  age: 12
+  somedata:
+    abcd: 1 
+    bcbd: 2
+    cdbd: 3

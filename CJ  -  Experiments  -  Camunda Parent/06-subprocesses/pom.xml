@@ -4,30 +4,26 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.6.RELEASE</version>
-		<relativePath />
+		<groupId>cj.software.experiments</groupId>
+		<artifactId>camunda-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>cj.software.experiments</groupId>
 	<artifactId>06-subprocesses</artifactId>
 	<name>CJ  -  Experiments  -  Camunda 06 Subprocesses</name>
 	<description>Playing around with multiple subprocesses</description>
-
 	<properties>
-		<java.version>8</java.version>
-		<camunda.version>7.12.0-ee</camunda.version>
+		<camunda.spring-boot.version>3.3.1</camunda.spring-boot.version>
+		<spring-boot.version>2.1.5.RELEASE</spring-boot.version>
 	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.camunda.bpm</groupId>
-				<artifactId>camunda-bom</artifactId>
-				<version>${camunda.version}</version>
-				<scope>import</scope>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
 				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -35,32 +31,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-			<version>3.3.5</version>
+			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+			<version>${camunda.spring-boot.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter-webapp-ee</artifactId>
-			<version>3.3.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.5.8</version>
-			<type>pom</type>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
 		<dependency>
@@ -71,26 +47,11 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
-
-		<!-- TEST scope -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.camunda.bpm.assert</groupId>
-			<artifactId>camunda-bpm-assert</artifactId>
-			<version>4.0.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.camunda.bpm.extension</groupId>
-			<artifactId>camunda-bpm-process-test-coverage</artifactId>
-			<version>0.3.2</version>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -98,10 +59,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.2.2.RELEASE</version>
 				<configuration>
-					<wait>20000</wait>
-					<maxAttempts>10</maxAttempts>
+					<layout>ZIP</layout>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
