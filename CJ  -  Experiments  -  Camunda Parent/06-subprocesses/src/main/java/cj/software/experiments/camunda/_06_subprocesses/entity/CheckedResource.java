@@ -16,7 +16,7 @@ public class CheckedResource
 
 	private String selectStatement;
 
-	private int limit;
+	private long limit;
 
 	public String getDatabaseConnection()
 	{
@@ -58,12 +58,12 @@ public class CheckedResource
 		this.selectStatement = pSelectStatement;
 	}
 
-	public int getLimit()
+	public long getLimit()
 	{
 		return this.limit;
 	}
 
-	public void setLimit(int pLimit)
+	public void setLimit(long pLimit)
 	{
 		this.limit = pLimit;
 	}
