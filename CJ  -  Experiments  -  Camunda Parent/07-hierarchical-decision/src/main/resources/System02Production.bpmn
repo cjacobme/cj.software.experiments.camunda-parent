@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1mshgs3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
+  <bpmn:process id="Process_System02Production" name="System 02 Production" isExecutable="true" camunda:isStartableInTasklist="false">
+    <bpmn:startEvent id="StartEvent_1" name="Start Checks">
+      <bpmn:outgoing>SequenceFlow_1484obu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1484obu" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_1owfkzb" />
+    <bpmn:parallelGateway id="ExclusiveGateway_1owfkzb">
+      <bpmn:incoming>SequenceFlow_1484obu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_17wlu7d</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0j91p78</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_17wlu7d" sourceRef="ExclusiveGateway_1owfkzb" targetRef="Task_178y6b4" />
+    <bpmn:callActivity id="Task_178y6b4" name="Check Application 01" camunda:asyncBefore="true" calledElement="Process_PerfomCheck">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="System">System02</camunda:inputParameter>
+          <camunda:inputParameter name="Scope">Production</camunda:inputParameter>
+          <camunda:inputParameter name="Application">App 01</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_17wlu7d</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1lmufji</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="SequenceFlow_1lmufji" sourceRef="Task_178y6b4" targetRef="ExclusiveGateway_0uy4zlv" />
+    <bpmn:parallelGateway id="ExclusiveGateway_0uy4zlv">
+      <bpmn:incoming>SequenceFlow_1lmufji</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1s7lnks</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0tcc3al</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="EndEvent_0uzoe72">
+      <bpmn:incoming>SequenceFlow_0tcc3al</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0tcc3al" sourceRef="ExclusiveGateway_0uy4zlv" targetRef="EndEvent_0uzoe72" />
+    <bpmn:callActivity id="CallActivity_0tw1b36" name="Check Application 02" camunda:asyncBefore="true" calledElement="Process_PerfomCheck">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="System">System02</camunda:inputParameter>
+          <camunda:inputParameter name="Scope">Production</camunda:inputParameter>
+          <camunda:inputParameter name="Application">App 02</camunda:inputParameter>
+        </camunda:inputOutput>
+        <camunda:in variables="all" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0j91p78</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1s7lnks</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="SequenceFlow_0j91p78" sourceRef="ExclusiveGateway_1owfkzb" targetRef="CallActivity_0tw1b36" />
+    <bpmn:sequenceFlow id="SequenceFlow_1s7lnks" sourceRef="CallActivity_0tw1b36" targetRef="ExclusiveGateway_0uy4zlv" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_System02Production">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="166" y="142" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1484obu_di" bpmnElement="SequenceFlow_1484obu">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="265" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_17rdrmn_di" bpmnElement="ExclusiveGateway_1owfkzb">
+        <dc:Bounds x="265" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_17wlu7d_di" bpmnElement="SequenceFlow_17wlu7d">
+        <di:waypoint x="315" y="117" />
+        <di:waypoint x="370" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_04mfj0f_di" bpmnElement="Task_178y6b4">
+        <dc:Bounds x="370" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1lmufji_di" bpmnElement="SequenceFlow_1lmufji">
+        <di:waypoint x="470" y="117" />
+        <di:waypoint x="525" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_1vkinie_di" bpmnElement="ExclusiveGateway_0uy4zlv">
+        <dc:Bounds x="525" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0uzoe72_di" bpmnElement="EndEvent_0uzoe72">
+        <dc:Bounds x="632" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0tcc3al_di" bpmnElement="SequenceFlow_0tcc3al">
+        <di:waypoint x="575" y="117" />
+        <di:waypoint x="632" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_0tw1b36_di" bpmnElement="CallActivity_0tw1b36">
+        <dc:Bounds x="370" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0j91p78_di" bpmnElement="SequenceFlow_0j91p78">
+        <di:waypoint x="290" y="142" />
+        <di:waypoint x="290" y="270" />
+        <di:waypoint x="370" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s7lnks_di" bpmnElement="SequenceFlow_1s7lnks">
+        <di:waypoint x="470" y="270" />
+        <di:waypoint x="550" y="270" />
+        <di:waypoint x="550" y="142" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

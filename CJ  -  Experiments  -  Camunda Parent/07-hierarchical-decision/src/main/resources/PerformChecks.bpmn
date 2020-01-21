@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0lqe7zw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
-  <bpmn:process id="Process_PerfomCheck" name="Perform Check" isExecutable="true">
+  <bpmn:process id="Process_PerfomCheck" name="Perform Check" isExecutable="true" camunda:isStartableInTasklist="false">
     <bpmn:startEvent id="StartEvent_1" name="Start Checking&#10;&#10;">
       <bpmn:outgoing>SequenceFlow_1ome7e9</bpmn:outgoing>
     </bpmn:startEvent>
@@ -24,15 +24,30 @@
       <bpmn:incoming>SequenceFlow_1fn2ljh</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1fn2ljh" sourceRef="ExclusiveGateway_1jnczdl" targetRef="EndEvent_045daas" />
-    <bpmn:serviceTask id="Task_1quddtd" name="Check 1" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._07_hierarchical.delegate.SimulateCheck">
+    <bpmn:serviceTask id="Task_1quddtd" name="Check 1.0" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._07_hierarchical.delegate.SimulateCheck">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Check">1.0</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1ome7e9</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hshpva</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_05rj9yq" name="Check 2.1" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._07_hierarchical.delegate.SimulateCheck">
+    <bpmn:serviceTask id="Task_05rj9yq" name="Check 2.0" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._07_hierarchical.delegate.SimulateCheck">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Check">2.0</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_054rwkk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_15f8ms6</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_1ey0pfz" name="Check 2.2" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._07_hierarchical.delegate.SimulateCheck">
+    <bpmn:serviceTask id="Task_1ey0pfz" name="Check 2.1" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._07_hierarchical.delegate.SimulateCheck">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Check">2.1</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0ncj9gk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mrkd3u</bpmn:outgoing>
     </bpmn:serviceTask>
