@@ -25,5 +25,6 @@
 		<module>04-messaging</module>
 		<module>05-history</module>
 		<module>06-subprocesses</module>
+		<module>07-hierarchical-decision</module>
 	</modules>
 </project>
