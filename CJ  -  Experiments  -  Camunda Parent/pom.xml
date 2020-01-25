@@ -26,5 +26,6 @@
 		<module>05-history</module>
 		<module>06-subprocesses</module>
 		<module>07-hierarchical-decision</module>
+		<module>08-only-once</module>
 	</modules>
 </project>
