@@ -1,4 +1,7 @@
 camunda.bpm:
+  job-execution:
+    wait-time-in-millis: 500
+    max-wait: 800
   admin-user:
     id: kermit
     password: kermit
