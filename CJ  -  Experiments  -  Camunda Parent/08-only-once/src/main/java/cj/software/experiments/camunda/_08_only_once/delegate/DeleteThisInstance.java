@@ -42,7 +42,7 @@ public class DeleteThisInstance
 		List<String> lAsList = Arrays.asList(lProcessInstanceId);
 		this.historyService.deleteHistoricProcessInstancesAsync(lAsList, "already running");
 		this.logger.info(
-				"{}: successfully deleted process instance {} from history service",
+				"{}: asyonchronously will delete process instance {} from history service",
 				lCorrelationId,
 				lProcessInstanceId);
 	}

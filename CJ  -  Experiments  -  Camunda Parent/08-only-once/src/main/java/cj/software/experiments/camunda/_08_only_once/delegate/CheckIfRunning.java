@@ -26,7 +26,7 @@ public class CheckIfRunning
 				.processDefinitionKey("Process_ImportSimulation")
 				.count();
 		this.logger.info("{}: found {} running process instances", lCorrelationId, lCount);
-		boolean lAlreadyRunning = (lCount > 0l);
+		boolean lAlreadyRunning = (lCount > 1l);
 		this.logger.info("{}: already running = {}", lCorrelationId, lAlreadyRunning);
 		pExecution.setVariable("alreadyRunning", lAlreadyRunning);
 	}
