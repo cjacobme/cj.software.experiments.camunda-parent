@@ -24,19 +24,28 @@ public class SimulateLongRunningProcess
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
 		String lCorrelationId = pExecution.getId();
-		long lDuration;
 		counter++;
-		if ((counter % 3) == 0)
+		this.logger.info("{}: counter = {}", lCorrelationId, counter);
+
+		if ((counter % 4) == 0)
 		{
-			lDuration = 60 + this.random.nextInt(10);
+			throw new Exception("simulated exception");
 		}
 		else
 		{
-			lDuration = 3;
+			long lDuration;
+			if ((counter % 7) == 0)
+			{
+				lDuration = 60 + this.random.nextInt(10);
+			}
+			else
+			{
+				lDuration = 3;
+			}
+			this.logger.info("{}: now start long run for {} seconds", lCorrelationId, lDuration);
+			TimeUnit.SECONDS.sleep(lDuration);
+			this.logger.info("{}: long run finished", lCorrelationId);
 		}
-		this.logger.info("{}: now start long run for {} seconds", lCorrelationId, lDuration);
-		TimeUnit.SECONDS.sleep(lDuration);
-		this.logger.info("{}: long run finished", lCorrelationId);
 	}
 
 }
