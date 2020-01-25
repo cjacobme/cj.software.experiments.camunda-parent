@@ -22,10 +22,18 @@ public class CheckIfRunning
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
 		String lCorrelationId = pExecution.getId();
-		long lCount = this.runtimeService.createExecutionQuery()
+		long lExecutionsCount = this.runtimeService.createExecutionQuery()
 				.processDefinitionKey("Process_ImportSimulation")
 				.count();
-		this.logger.info("{}: found {} running process instances", lCorrelationId, lCount);
+		long lIncidentsCount = this.runtimeService.createIncidentQuery()
+				.processDefinitionKeyIn("Process_ImportSimulation")
+				.count();
+		this.logger.info(
+				"{}: found {} running executions and {} incidents",
+				lCorrelationId,
+				lExecutionsCount,
+				lIncidentsCount);
+		long lCount = lExecutionsCount - lIncidentsCount;
 		boolean lAlreadyRunning = (lCount > 1l);
 		this.logger.info("{}: already running = {}", lCorrelationId, lAlreadyRunning);
 		pExecution.setVariable("alreadyRunning", lAlreadyRunning);
