@@ -31,8 +31,11 @@ public class SimulateLongRunningProcess
 	{
 		String lCorrelationId = pExecution.getId();
 		counter++;
-		this.logger.info("{}: counter = {}", lCorrelationId, counter);
-		pExecution.setVariable("complete", Boolean.FALSE);
+		this.logger.info(
+				"{}: counter = {}, complete={}",
+				lCorrelationId,
+				counter,
+				pExecution.getVariable("complete"));
 
 		if ((counter % this.configurationHolder.getSimulateExceptionEvery()) == 0)
 		{
