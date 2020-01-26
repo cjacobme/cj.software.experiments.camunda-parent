@@ -7,7 +7,10 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import cj.software.experiments.camunda._08_only_once.spring.ConfigurationHolder;
 
 @Component
 public class SimulateLongRunningProcess
@@ -20,6 +23,9 @@ public class SimulateLongRunningProcess
 
 	private static int counter = 0;
 
+	@Autowired
+	private ConfigurationHolder configurationHolder;
+
 	@Override
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
@@ -27,20 +33,21 @@ public class SimulateLongRunningProcess
 		counter++;
 		this.logger.info("{}: counter = {}", lCorrelationId, counter);
 
-		if ((counter % 4) == 0)
+		if ((counter % this.configurationHolder.getSimulateExceptionEvery()) == 0)
 		{
 			throw new Exception("simulated exception");
 		}
 		else
 		{
 			long lDuration;
-			if ((counter % 7) == 0)
+			if ((counter % this.configurationHolder.getLongRunEvery()) == 0)
 			{
-				lDuration = 60 + this.random.nextInt(10);
+				lDuration = this.configurationHolder.getLongRunBias()
+						+ this.random.nextInt(this.configurationHolder.getLongRunRandom());
 			}
 			else
 			{
-				lDuration = 3;
+				lDuration = this.configurationHolder.getShortRun();
 			}
 			this.logger.info("{}: now start long run for {} seconds", lCorrelationId, lDuration);
 			TimeUnit.SECONDS.sleep(lDuration);

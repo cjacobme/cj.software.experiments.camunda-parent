@@ -8,3 +8,17 @@ camunda.bpm:
     firstName: Kermit
   filter:
     create: All tasks
+    
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/only_once
+  driverClassName: org.postgresql.Driver
+  username: only_once
+  password: only_once
+
+cj.software.only-once:
+  cron-settings: 0 0/1 * * * ?
+  simulate-exception-every: 5
+  long-run-every: 3
+  long-run-bias: 300
+  long-run-random: 30
+  short-run: 2
