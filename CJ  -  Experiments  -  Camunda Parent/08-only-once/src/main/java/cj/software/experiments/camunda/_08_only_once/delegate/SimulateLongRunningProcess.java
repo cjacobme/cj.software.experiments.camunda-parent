@@ -32,6 +32,7 @@ public class SimulateLongRunningProcess
 		String lCorrelationId = pExecution.getId();
 		counter++;
 		this.logger.info("{}: counter = {}", lCorrelationId, counter);
+		pExecution.setVariable("complete", Boolean.FALSE);
 
 		if ((counter % this.configurationHolder.getSimulateExceptionEvery()) == 0)
 		{
@@ -40,18 +41,26 @@ public class SimulateLongRunningProcess
 		else
 		{
 			long lDuration;
+			String lRole;
 			if ((counter % this.configurationHolder.getLongRunEvery()) == 0)
 			{
+				lRole = "long";
 				lDuration = this.configurationHolder.getLongRunBias()
 						+ this.random.nextInt(this.configurationHolder.getLongRunRandom());
 			}
 			else
 			{
+				lRole = "short";
 				lDuration = this.configurationHolder.getShortRun();
 			}
-			this.logger.info("{}: now start long run for {} seconds", lCorrelationId, lDuration);
+			this.logger.info(
+					"{}: now start {} run for {} seconds",
+					lCorrelationId,
+					lRole,
+					lDuration);
 			TimeUnit.SECONDS.sleep(lDuration);
-			this.logger.info("{}: long run finished", lCorrelationId);
+			pExecution.setVariable("complete", Boolean.TRUE);
+			this.logger.info("{}: {} run finished", lCorrelationId, lRole);
 		}
 	}
 
