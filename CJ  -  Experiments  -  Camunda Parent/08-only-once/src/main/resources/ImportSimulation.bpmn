@@ -41,7 +41,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Start cyclic import">
       <bpmn:outgoing>SequenceFlow_0rx02ar</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">0 0/1 * * * ?</bpmn:timeCycle>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">${configurationHolder.getCronSettings()}</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
   </bpmn:process>
