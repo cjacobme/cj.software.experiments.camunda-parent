@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_0gpdgqn" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
-  <bpmn:collaboration id="Collaboration_0zzp759">
-    <bpmn:participant id="Participant_1sm9dr8" name="Entry-Point" processRef="Process_1r2m3fz" />
-    <bpmn:participant id="Participant_17qpe65" name="Interim Processing" processRef="Process_07q34dr" />
-    <bpmn:messageFlow id="MessageFlow_0xqfpv4" sourceRef="IntermediateThrowEvent_0t8r9zp" targetRef="StartEvent_00pwn1n" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0gpdgqn" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
+  <bpmn:collaboration id="DistributedProcessing">
+    <bpmn:participant id="Participant_EntryPoint" name="Entry-Point" processRef="Process_1r2m3fz" />
+    <bpmn:participant id="Participant_InterimProcessing" name="Interim Processing" processRef="Process_Order" />
+    <bpmn:messageFlow id="MessageFlow_0xqfpv4" sourceRef="IntermediateThrowEvent_0t8r9zp" targetRef="StartEvent_Processing" />
     <bpmn:messageFlow id="MessageFlow_0fh5peu" sourceRef="EndEvent_ProcessedInterim" targetRef="IntermediateCatchEvent_0slhv0c" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1r2m3fz" isExecutable="true">
+  <bpmn:process id="Process_1r2m3fz" name="Entry Point" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0dy2dta</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Task_0aqp9sd" name="Determine Processor">
-      <bpmn:incoming>SequenceFlow_0dy2dta</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0f30rt7</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_0dy2dta" sourceRef="StartEvent_1" targetRef="Task_0aqp9sd" />
     <bpmn:sequenceFlow id="SequenceFlow_0f30rt7" sourceRef="Task_0aqp9sd" targetRef="IntermediateThrowEvent_0t8r9zp" />
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0t8r9zp" name="Send to Processing">
       <bpmn:incoming>SequenceFlow_0f30rt7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0axwh8k</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_1ev567f" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.StartMessageSender" />
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0axwh8k" sourceRef="IntermediateThrowEvent_0t8r9zp" targetRef="ExclusiveGateway_0ucmm9w" />
     <bpmn:eventBasedGateway id="ExclusiveGateway_0ucmm9w">
@@ -28,48 +24,62 @@
       <bpmn:outgoing>SequenceFlow_0i3q29b</bpmn:outgoing>
     </bpmn:eventBasedGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0m4bgd7" sourceRef="ExclusiveGateway_0ucmm9w" targetRef="IntermediateCatchEvent_0slhv0c" />
-    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0slhv0c" name="Received Processed">
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0slhv0c" name="Received Processed" camunda:asyncAfter="true">
       <bpmn:incoming>SequenceFlow_0m4bgd7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1vbbqc6</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_1n5l6zh" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:task id="Task_0ppr69e" name="Notify Processed">
-      <bpmn:incoming>SequenceFlow_1vbbqc6</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0rk5h45</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_1vbbqc6" sourceRef="IntermediateCatchEvent_0slhv0c" targetRef="Task_0ppr69e" />
-    <bpmn:endEvent id="EndEvent_Processed" name="Processed">
+    <bpmn:endEvent id="EndEvent_Processed" name="Happy End">
       <bpmn:incoming>SequenceFlow_0rk5h45</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0rk5h45" sourceRef="Task_0ppr69e" targetRef="EndEvent_Processed" />
-    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0azvrm7" name="Timeout caught">
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0azvrm7" name="Timeout caught" camunda:asyncAfter="true">
       <bpmn:incoming>SequenceFlow_0i3q29b</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1itki6i</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0i3q29b" sourceRef="ExclusiveGateway_0ucmm9w" targetRef="IntermediateCatchEvent_0azvrm7" />
-    <bpmn:task id="Task_0iqkpcr" name="Notify Timeout">
-      <bpmn:incoming>SequenceFlow_1itki6i</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1giylaz</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:sequenceFlow id="SequenceFlow_1itki6i" sourceRef="IntermediateCatchEvent_0azvrm7" targetRef="Task_0iqkpcr" />
     <bpmn:endEvent id="EndEvent_1jdtq1q" name="Timeout">
       <bpmn:incoming>SequenceFlow_1giylaz</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1giylaz" sourceRef="Task_0iqkpcr" targetRef="EndEvent_1jdtq1q" />
+    <bpmn:serviceTask id="Task_0aqp9sd" name="Determine Processor" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.DetermineProcessor">
+      <bpmn:incoming>SequenceFlow_0dy2dta</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0f30rt7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0ppr69e" name="Notify Processed" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.Notification">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="note">'processed'</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1vbbqc6</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0rk5h45</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_0iqkpcr" name="Notify Timeout" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.Notification">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="note">'timeout'</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1itki6i</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1giylaz</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
-  <bpmn:process id="Process_07q34dr" isExecutable="false">
-    <bpmn:sequenceFlow id="SequenceFlow_0q1nkh2" sourceRef="ExclusiveGateway_0pob7ux" targetRef="Task_107fwyq" />
-    <bpmn:task id="Task_107fwyq" name="Department A">
-      <bpmn:incoming>SequenceFlow_0q1nkh2</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_16oe3iq</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_111yenf" sourceRef="ExclusiveGateway_0pob7ux" targetRef="Task_0pscox7" />
-    <bpmn:startEvent id="StartEvent_00pwn1n">
+  <bpmn:process id="Process_Order" name="Process Order" isExecutable="true" camunda:isStartableInTasklist="false">
+    <bpmn:sequenceFlow id="SequenceFlow_0q1nkh2" name="A" sourceRef="ExclusiveGateway_0pob7ux" targetRef="Task_DepA">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${department == 'A'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_111yenf" name="B" sourceRef="ExclusiveGateway_0pob7ux" targetRef="Task_DepB">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${department == 'B'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:startEvent id="StartEvent_Processing" name="Start Processing">
       <bpmn:outgoing>SequenceFlow_03iolq1</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_1ev567f" />
     </bpmn:startEvent>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0pob7ux" name="Processor?">
       <bpmn:incoming>SequenceFlow_03iolq1</bpmn:incoming>
@@ -77,44 +87,64 @@
       <bpmn:outgoing>SequenceFlow_111yenf</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1dt1eyr</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_03iolq1" sourceRef="StartEvent_00pwn1n" targetRef="ExclusiveGateway_0pob7ux" />
-    <bpmn:task id="Task_0pscox7" name="Department B">
-      <bpmn:incoming>SequenceFlow_111yenf</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0dhtzsv</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:task id="Task_0nkn2x1" name="Department C">
-      <bpmn:incoming>SequenceFlow_1dt1eyr</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_10xj3cc</bpmn:outgoing>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_1dt1eyr" sourceRef="ExclusiveGateway_0pob7ux" targetRef="Task_0nkn2x1" />
-    <bpmn:sequenceFlow id="SequenceFlow_10xj3cc" sourceRef="Task_0nkn2x1" targetRef="ExclusiveGateway_0j3xczk" />
+    <bpmn:sequenceFlow id="SequenceFlow_03iolq1" sourceRef="StartEvent_Processing" targetRef="ExclusiveGateway_0pob7ux" />
+    <bpmn:sequenceFlow id="SequenceFlow_1dt1eyr" name="C" sourceRef="ExclusiveGateway_0pob7ux" targetRef="Task_DepC">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${department == 'C'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_10xj3cc" sourceRef="Task_DepC" targetRef="ExclusiveGateway_0j3xczk" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0j3xczk">
       <bpmn:incoming>SequenceFlow_10xj3cc</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0dhtzsv</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_16oe3iq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mrkyg3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0dhtzsv" sourceRef="Task_0pscox7" targetRef="ExclusiveGateway_0j3xczk" />
-    <bpmn:sequenceFlow id="SequenceFlow_16oe3iq" sourceRef="Task_107fwyq" targetRef="ExclusiveGateway_0j3xczk" />
+    <bpmn:sequenceFlow id="SequenceFlow_0dhtzsv" sourceRef="Task_DepB" targetRef="ExclusiveGateway_0j3xczk" />
+    <bpmn:sequenceFlow id="SequenceFlow_16oe3iq" sourceRef="Task_DepA" targetRef="ExclusiveGateway_0j3xczk" />
     <bpmn:sequenceFlow id="SequenceFlow_1mrkyg3" sourceRef="ExclusiveGateway_0j3xczk" targetRef="EndEvent_ProcessedInterim" />
-    <bpmn:endEvent id="EndEvent_ProcessedInterim" name="Processed Interim">
+    <bpmn:endEvent id="EndEvent_ProcessedInterim" name="Processed Interim" camunda:asyncBefore="true">
       <bpmn:incoming>SequenceFlow_1mrkyg3</bpmn:incoming>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_1n5l6zh" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.ProcessedMessageSender" />
     </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_DepA" name="Department A" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.Processor">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="duration">5</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0q1nkh2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_16oe3iq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_DepB" name="Department B" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.Processor">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="duration">8</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_111yenf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0dhtzsv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_DepC" name="Department C" camunda:asyncBefore="true" camunda:class="cj.software.experiments.camunda._09_optimize.delegate.Processor">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="duration">40</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1dt1eyr</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_10xj3cc</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
+  <bpmn:message id="Message_1ev567f" name="Process" />
+  <bpmn:message id="Message_1n5l6zh" name="Processed" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0zzp759">
-      <bpmndi:BPMNShape id="Participant_1sm9dr8_di" bpmnElement="Participant_1sm9dr8" isHorizontal="true">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DistributedProcessing">
+      <bpmndi:BPMNShape id="Participant_1sm9dr8_di" bpmnElement="Participant_EntryPoint" isHorizontal="true">
         <dc:Bounds x="129" y="520" width="939" height="250" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="639" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_17qpe65_di" bpmnElement="Participant_17qpe65" isHorizontal="true">
+      <bpmndi:BPMNShape id="Participant_17qpe65_di" bpmnElement="Participant_InterimProcessing" isHorizontal="true">
         <dc:Bounds x="129" y="110" width="689" height="360" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0aqp9sd_di" bpmnElement="Task_0aqp9sd">
-        <dc:Bounds x="270" y="617" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0dy2dta_di" bpmnElement="SequenceFlow_0dy2dta">
         <di:waypoint x="215" y="657" />
@@ -130,8 +160,11 @@
           <dc:Bounds x="423" y="682" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_1jfgb1x_di" bpmnElement="StartEvent_00pwn1n">
+      <bpmndi:BPMNShape id="StartEvent_1jfgb1x_di" bpmnElement="StartEvent_Processing">
         <dc:Bounds x="172" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="150" y="232" width="81" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_0xqfpv4_di" bpmnElement="MessageFlow_0xqfpv4">
         <di:waypoint x="450" y="639" />
@@ -149,28 +182,28 @@
         <di:waypoint x="208" y="280" />
         <di:waypoint x="265" y="280" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_107fwyq_di" bpmnElement="Task_107fwyq">
-        <dc:Bounds x="380" y="120" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0q1nkh2_di" bpmnElement="SequenceFlow_0q1nkh2">
         <di:waypoint x="290" y="255" />
         <di:waypoint x="290" y="160" />
         <di:waypoint x="380" y="160" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="302" y="205" width="7" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_0pscox7_di" bpmnElement="Task_0pscox7">
-        <dc:Bounds x="380" y="240" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_111yenf_di" bpmnElement="SequenceFlow_111yenf">
         <di:waypoint x="315" y="280" />
         <di:waypoint x="380" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="344" y="262" width="8" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_0nkn2x1_di" bpmnElement="Task_0nkn2x1">
-        <dc:Bounds x="380" y="350" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1dt1eyr_di" bpmnElement="SequenceFlow_1dt1eyr">
         <di:waypoint x="290" y="305" />
         <di:waypoint x="290" y="390" />
         <di:waypoint x="380" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="301" y="345" width="8" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0j3xczk_di" bpmnElement="ExclusiveGateway_0j3xczk" isMarkerVisible="true">
         <dc:Bounds x="555" y="255" width="50" height="50" />
@@ -221,9 +254,6 @@
         <di:waypoint x="670" y="298" />
         <di:waypoint x="670" y="552" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_0ppr69e_di" bpmnElement="Task_0ppr69e">
-        <dc:Bounds x="760" y="530" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1vbbqc6_di" bpmnElement="SequenceFlow_1vbbqc6">
         <di:waypoint x="688" y="570" />
         <di:waypoint x="760" y="570" />
@@ -231,7 +261,7 @@
       <bpmndi:BPMNShape id="EndEvent_0zwfur2_di" bpmnElement="EndEvent_Processed" bioc:stroke="#000" bioc:fill="#fff">
         <dc:Bounds x="932" y="552" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="924" y="595" width="52" height="14" />
+          <dc:Bounds x="923" y="595" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0rk5h45_di" bpmnElement="SequenceFlow_0rk5h45">
@@ -248,9 +278,6 @@
         <di:waypoint x="585" y="657" />
         <di:waypoint x="652" y="657" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_0iqkpcr_di" bpmnElement="Task_0iqkpcr">
-        <dc:Bounds x="760" y="617" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1itki6i_di" bpmnElement="SequenceFlow_1itki6i">
         <di:waypoint x="688" y="657" />
         <di:waypoint x="760" y="657" />
@@ -265,6 +292,24 @@
         <di:waypoint x="860" y="657" />
         <di:waypoint x="932" y="657" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_09pju12_di" bpmnElement="Task_0aqp9sd">
+        <dc:Bounds x="270" y="617" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1yao9ej_di" bpmnElement="Task_DepA">
+        <dc:Bounds x="380" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0uptjl5_di" bpmnElement="Task_DepB">
+        <dc:Bounds x="380" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0x0lprn_di" bpmnElement="Task_DepC">
+        <dc:Bounds x="380" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0iysamg_di" bpmnElement="Task_0ppr69e">
+        <dc:Bounds x="760" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0scecd9_di" bpmnElement="Task_0iqkpcr">
+        <dc:Bounds x="760" y="617" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
