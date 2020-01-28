@@ -1,0 +1,6 @@
+--------------- BEGIN CAMUNDA BPM LICENSE KEY ---------------
+DpvDDMJJq/WZy2CIOrBmvuWqhB5rOs66pqAgP+Sug8vJAdv7pW3Z2SDmFAui7
+xTkEn2zcXExS/PAC+6zd58ppjF7CJmqV5u6CsivMmHDtt+EaYekgEtuzwk+aZ
+ypUSbOwDxOf0wqYQ9IK7IJ+Hekjl7/pETkz0QbuV+Dn4IXqDU=;
+innogy_se;2020-02-15
+---------------  END CAMUNDA BPM LICENSE KEY  ---------------
