@@ -25,18 +25,29 @@ public class ReponseSender
 	@Override
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
+		String lCorrelationId = pExecution.getId();
 		String lSender = (String) pExecution.getVariable("sender");
 		String lContent = (String) pExecution.getVariable("content");
 		String lResponse = (String) pExecution.getVariable("response");
-		this.logger.info("sender {}, response {}", lSender, lResponse);
-		this.logger.info("send response now...");
+		String lResponseTo = (String) pExecution.getVariable("respond-to");
+		this.logger.info(
+				"{}: sender {}, response {} to {}",
+				lCorrelationId,
+				lSender,
+				lResponse,
+				lResponseTo);
+		this.logger.info("{}: send response now...", lCorrelationId);
 		MessageCorrelationResult lCorrelateWithResult = this.runtimeService
 				.createMessageCorrelation("Response")
+				.processInstanceId(lResponseTo)
 				.setVariable("sender", lSender)
 				.setVariable("content", lContent)
 				.setVariable("response", lResponse)
 				.correlateWithResult();
-		this.logger.info("response was sent: {}", lCorrelateWithResult.getResultType());
+		this.logger.info(
+				"{}: response was sent: {}",
+				lCorrelationId,
+				lCorrelateWithResult.getResultType());
 	}
 
 }

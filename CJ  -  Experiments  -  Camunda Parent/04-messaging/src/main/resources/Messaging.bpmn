@@ -9,7 +9,7 @@
     <bpmn:messageFlow id="MessageFlow_0iw493r" sourceRef="IntermediateThrowEvent_SendRequest" targetRef="StartEvent_RequestReceived" />
     <bpmn:messageFlow id="MessageFlow_033k4wk" sourceRef="IntermediateThrowEvent_ReturnResponse" targetRef="IntermediateThrowEvent_ReceiveResponse" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_ServiceProvider" isExecutable="true" camunda:isStartableInTasklist="false">
+  <bpmn:process id="Process_ServiceProvider" name="Service Provider" isExecutable="true" camunda:isStartableInTasklist="false">
     <bpmn:documentation>the service provider should respond to the request</bpmn:documentation>
     <bpmn:startEvent id="StartEvent_RequestReceived" name="Request Received">
       <bpmn:outgoing>SequenceFlow_0kzq352</bpmn:outgoing>
@@ -32,7 +32,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0ejx19m" sourceRef="UserTask_FillResponse" targetRef="IntermediateThrowEvent_ReturnResponse" />
     <bpmn:sequenceFlow id="SequenceFlow_0xuc2tv" sourceRef="IntermediateThrowEvent_ReturnResponse" targetRef="EndEvent_0e2j7gy" />
   </bpmn:process>
-  <bpmn:process id="Process_Client" isExecutable="true">
+  <bpmn:process id="Process_Client" name="Service-Requesting Client" isExecutable="true">
     <bpmn:startEvent id="StartEvent_StartRequestProcess" name="Start Request Process" camunda:formKey="embedded:app:forms/request.html">
       <bpmn:documentation>fill all elements in order to submit a request to the service provider</bpmn:documentation>
       <bpmn:outgoing>SequenceFlow_1f1psqb</bpmn:outgoing>
@@ -51,7 +51,7 @@
     <bpmn:scriptTask id="Task_1owqetj" name="print response" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_0w00x3s</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1p218ia</bpmn:outgoing>
-      <bpmn:script>println 'response is ' + execution.getVariable('response')</bpmn:script>
+      <bpmn:script>println execution.getId() + ': response is ' + execution.getVariable('response')</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="SequenceFlow_1f1psqb" sourceRef="StartEvent_StartRequestProcess" targetRef="IntermediateThrowEvent_SendRequest" />
     <bpmn:sequenceFlow id="SequenceFlow_0k88de1" sourceRef="IntermediateThrowEvent_SendRequest" targetRef="IntermediateThrowEvent_ReceiveResponse" />
