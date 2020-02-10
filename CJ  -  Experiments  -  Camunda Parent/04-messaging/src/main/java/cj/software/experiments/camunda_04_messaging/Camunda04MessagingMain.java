@@ -8,8 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableProcessApplication
 public class Camunda04MessagingMain
 {
-	public static void main(String[] pArgs)
+	public static void main(String[] pArgs) throws ClassNotFoundException
 	{
+		Class.forName("org.postgresql.Driver");
 		SpringApplication.run(Camunda04MessagingMain.class, pArgs);
 	}
 }
