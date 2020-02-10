@@ -1,11 +1,11 @@
 package cj.software.experiments.camunda_04_messaging;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.runtime.MessageCorrelationResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class ReponseSender
 		implements
 		JavaDelegate
 {
-	private Logger logger = LoggerFactory.getLogger(ReponseSender.class);
+	private Logger logger = LogManager.getFormatterLogger();
 
 	@Autowired
 	private RuntimeService runtimeService;
@@ -31,12 +31,12 @@ public class ReponseSender
 		String lResponse = (String) pExecution.getVariable("response");
 		String lResponseTo = (String) pExecution.getVariable("respond-to");
 		this.logger.info(
-				"{}: sender {}, response {} to {}",
+				"%s: sender %s, response %s to %s",
 				lCorrelationId,
 				lSender,
 				lResponse,
 				lResponseTo);
-		this.logger.info("{}: send response now...", lCorrelationId);
+		this.logger.info("%s: send response now...", lCorrelationId);
 		MessageCorrelationResult lCorrelateWithResult = this.runtimeService
 				.createMessageCorrelation("Response")
 				.processInstanceId(lResponseTo)
@@ -45,7 +45,7 @@ public class ReponseSender
 				.setVariable("response", lResponse)
 				.correlateWithResult();
 		this.logger.info(
-				"{}: response was sent: {}",
+				"%s: response was sent: %s",
 				lCorrelationId,
 				lCorrelateWithResult.getResultType());
 	}
