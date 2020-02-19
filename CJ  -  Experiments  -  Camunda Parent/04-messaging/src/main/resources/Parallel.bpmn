@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1majvea" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
   <bpmn:process id="Process_Parallel" name="Parallel Executions" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="Start">
+    <bpmn:startEvent id="StartEvent_1" name="Start" camunda:formKey="embedded:app:forms/startParallel.html">
       <bpmn:outgoing>SequenceFlow_1x4y5vo</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1x4y5vo" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_0zt1k7s" />
@@ -27,7 +27,7 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_03ct93r" sourceRef="ExclusiveGateway_0zt1k7s" targetRef="Task_12c3w6b" />
     <bpmn:sequenceFlow id="SequenceFlow_1j8qerr" sourceRef="Task_12c3w6b" targetRef="ExclusiveGateway_1ps7rv4" />
-    <bpmn:userTask id="Task_12c3w6b" name="second task">
+    <bpmn:userTask id="Task_12c3w6b" name="second task" camunda:candidateGroups="checkers">
       <bpmn:incoming>SequenceFlow_03ct93r</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1j8qerr</bpmn:outgoing>
     </bpmn:userTask>

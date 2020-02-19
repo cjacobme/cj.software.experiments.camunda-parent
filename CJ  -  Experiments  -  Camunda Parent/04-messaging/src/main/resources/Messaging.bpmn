@@ -15,7 +15,7 @@
       <bpmn:outgoing>SequenceFlow_0kzq352</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_0vl5sm1" />
     </bpmn:startEvent>
-    <bpmn:userTask id="UserTask_FillResponse" name="Fill Response" camunda:formKey="embedded:app:forms/response.html">
+    <bpmn:userTask id="UserTask_FillResponse" name="Fill Response" camunda:formKey="embedded:app:forms/response.html" camunda:candidateGroups="support">
       <bpmn:documentation>Please enter your helping response here</bpmn:documentation>
       <bpmn:incoming>SequenceFlow_0kzq352</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ejx19m</bpmn:outgoing>
