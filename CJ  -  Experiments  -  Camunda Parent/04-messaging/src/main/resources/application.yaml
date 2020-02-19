@@ -5,3 +5,14 @@ camunda.bpm:
     firstName: Kermit
   filter:
     create: All tasks
+  database:
+    schema-update: false
+    type: postgres
+  authorization:
+    enabled: true
+    
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/messaging
+  driverClassName: org.postgresql.Driver
+  username: messaging
+  password: messaging
