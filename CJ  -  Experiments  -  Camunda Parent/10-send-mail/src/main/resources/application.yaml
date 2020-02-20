@@ -9,9 +9,12 @@ camunda.bpm:
 spring.mail:
   host: smtp.aol.com
   port: 587
-  username: cjacobme@aol.com
+  username: cjacobme
   properties.mail.smtp.auth: true
   properties.mail.smtp.starttls.enable: true
+
+cj.software.experiments.camunda.10:
+  addtl-url: https://www.nasa.gov
     
 #spring.datasource:
 #  url: jdbc:postgresql://localhost:5432/optimize

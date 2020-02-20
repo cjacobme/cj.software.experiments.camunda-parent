@@ -4,7 +4,10 @@
     <bpmn:startEvent id="StartEvent_1" name="Start">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="Content" label="content in mail" type="string" defaultValue="This is a sample mail content" />
+          <camunda:formField id="From" label="mail sender" type="string" />
+          <camunda:formField id="To" label="mail receiver" type="string" />
+          <camunda:formField id="Subject" label="Mail Subject" type="string" />
+          <camunda:formField id="Body" label="Body" type="string" defaultValue="this is a sample mail" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_0sf1tyi</bpmn:outgoing>
