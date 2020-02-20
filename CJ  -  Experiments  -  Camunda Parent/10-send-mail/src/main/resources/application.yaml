@@ -5,6 +5,13 @@ camunda.bpm:
     firstName: Kermit
   filter:
     create: All tasks
+
+spring.mail:
+  host: smtp.aol.com
+  port: 587
+  username: cjacobme@aol.com
+  properties.mail.smtp.auth: true
+  properties.mail.smtp.starttls.enable: true
     
 #spring.datasource:
 #  url: jdbc:postgresql://localhost:5432/optimize
