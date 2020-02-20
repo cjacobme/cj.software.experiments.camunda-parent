@@ -6,13 +6,6 @@ camunda.bpm:
   filter:
     create: All tasks
 
-spring.mail:
-  host: smtp.aol.com
-  port: 587
-  username: cjacobme
-  properties.mail.smtp.auth: true
-  properties.mail.smtp.starttls.enable: true
-
 cj.software.experiments.camunda.10:
   addtl-url: https://www.nasa.gov
     
