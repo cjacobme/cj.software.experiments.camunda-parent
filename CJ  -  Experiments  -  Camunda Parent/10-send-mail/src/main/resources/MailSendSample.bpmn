@@ -12,21 +12,48 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_0sf1tyi</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0sf1tyi" sourceRef="StartEvent_1" targetRef="IntermediateEventMailSend" />
+    <bpmn:sequenceFlow id="SequenceFlow_0sf1tyi" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_0dqtc1d" />
     <bpmn:intermediateThrowEvent id="IntermediateEventMailSend" name="Send Mail">
-      <bpmn:incoming>SequenceFlow_0sf1tyi</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0ddj099</bpmn:outgoing>
+      <bpmn:incoming>SequenceFlow_0etal6v</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0hny1i5</bpmn:outgoing>
       <bpmn:messageEventDefinition camunda:class="cj.software.experiments.camunda._10_mail.delegate.MailSenderDelegate" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0ddj099" sourceRef="IntermediateEventMailSend" targetRef="UserTask_Watchout" />
     <bpmn:userTask id="UserTask_Watchout" name="Watchout">
-      <bpmn:incoming>SequenceFlow_0ddj099</bpmn:incoming>
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Subject" label="Subject" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="Body" label="Body" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_134glvv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1iq2p17</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="EndEvent_0oe7390" name="Happy End">
-      <bpmn:incoming>SequenceFlow_1iq2p17</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_00gzuql</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1iq2p17" sourceRef="UserTask_Watchout" targetRef="EndEvent_0oe7390" />
+    <bpmn:sequenceFlow id="SequenceFlow_1iq2p17" sourceRef="UserTask_Watchout" targetRef="ExclusiveGateway_0cqc8em" />
+    <bpmn:parallelGateway id="ExclusiveGateway_0dqtc1d" camunda:asyncAfter="true">
+      <bpmn:incoming>SequenceFlow_0sf1tyi</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_134glvv</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0etal6v</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_134glvv" sourceRef="ExclusiveGateway_0dqtc1d" targetRef="UserTask_Watchout" />
+    <bpmn:sequenceFlow id="SequenceFlow_0etal6v" sourceRef="ExclusiveGateway_0dqtc1d" targetRef="IntermediateEventMailSend" />
+    <bpmn:sequenceFlow id="SequenceFlow_00gzuql" sourceRef="ExclusiveGateway_0cqc8em" targetRef="EndEvent_0oe7390" />
+    <bpmn:parallelGateway id="ExclusiveGateway_0cqc8em">
+      <bpmn:incoming>SequenceFlow_1iq2p17</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0hny1i5</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_00gzuql</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0hny1i5" sourceRef="IntermediateEventMailSend" targetRef="ExclusiveGateway_0cqc8em" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_MailSendSample">
@@ -38,30 +65,50 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0sf1tyi_di" bpmnElement="SequenceFlow_0sf1tyi">
         <di:waypoint x="215" y="117" />
-        <di:waypoint x="272" y="117" />
+        <di:waypoint x="295" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_1phedze_di" bpmnElement="IntermediateEventMailSend">
-        <dc:Bounds x="272" y="99" width="36" height="36" />
+        <dc:Bounds x="442" y="232" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="265" y="142" width="50" height="14" />
+          <dc:Bounds x="435" y="275" width="50" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ddj099_di" bpmnElement="SequenceFlow_0ddj099">
-        <di:waypoint x="308" y="117" />
-        <di:waypoint x="370" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_11kapme_di" bpmnElement="UserTask_Watchout">
-        <dc:Bounds x="370" y="77" width="100" height="80" />
+        <dc:Bounds x="410" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_0oe7390_di" bpmnElement="EndEvent_0oe7390">
-        <dc:Bounds x="532" y="99" width="36" height="36" />
+        <dc:Bounds x="692" y="99" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="523" y="142" width="55" height="14" />
+          <dc:Bounds x="683" y="142" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1iq2p17_di" bpmnElement="SequenceFlow_1iq2p17">
-        <di:waypoint x="470" y="117" />
-        <di:waypoint x="532" y="117" />
+        <di:waypoint x="510" y="117" />
+        <di:waypoint x="565" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_0zijo40_di" bpmnElement="ExclusiveGateway_0dqtc1d">
+        <dc:Bounds x="295" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_134glvv_di" bpmnElement="SequenceFlow_134glvv">
+        <di:waypoint x="345" y="117" />
+        <di:waypoint x="410" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0etal6v_di" bpmnElement="SequenceFlow_0etal6v">
+        <di:waypoint x="320" y="142" />
+        <di:waypoint x="320" y="250" />
+        <di:waypoint x="442" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_00gzuql_di" bpmnElement="SequenceFlow_00gzuql">
+        <di:waypoint x="615" y="117" />
+        <di:waypoint x="692" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ParallelGateway_1enbmf0_di" bpmnElement="ExclusiveGateway_0cqc8em">
+        <dc:Bounds x="565" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0hny1i5_di" bpmnElement="SequenceFlow_0hny1i5">
+        <di:waypoint x="478" y="250" />
+        <di:waypoint x="590" y="250" />
+        <di:waypoint x="590" y="142" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
