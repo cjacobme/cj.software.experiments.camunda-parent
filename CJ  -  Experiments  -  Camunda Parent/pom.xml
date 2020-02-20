@@ -28,5 +28,6 @@
 		<module>07-hierarchical-decision</module>
 		<module>08-only-once</module>
 		<module>09-optimize</module>
+		<module>10-send-mail</module>
 	</modules>
 </project>
