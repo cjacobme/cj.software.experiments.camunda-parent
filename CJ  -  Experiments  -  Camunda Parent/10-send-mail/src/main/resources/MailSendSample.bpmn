@@ -41,6 +41,9 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1iq2p17" sourceRef="UserTask_Watchout" targetRef="ExclusiveGateway_0cqc8em" />
     <bpmn:parallelGateway id="ExclusiveGateway_0dqtc1d" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:failedJobRetryTimeCycle>R0/PT30S</camunda:failedJobRetryTimeCycle>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0sf1tyi</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_134glvv</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0etal6v</bpmn:outgoing>
