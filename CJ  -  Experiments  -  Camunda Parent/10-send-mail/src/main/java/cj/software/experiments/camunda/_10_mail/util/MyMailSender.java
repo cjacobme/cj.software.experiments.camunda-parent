@@ -24,9 +24,12 @@ public class MyMailSender
 	private Logger logger = LogManager.getFormatterLogger();
 
 	@Autowired
+	private MailContentBuilder mailContentBuilder;
+
+	@Autowired
 	private JavaMailSender javaMailSender;
 
-	public void sendMail(String pFrom, String pTo, String pSubject, String pContent)
+	public void sendMail(String pFrom, String pTo, String pSubject, String pContent, String pLinkTo)
 			throws MessagingException,
 			IOException
 	{
@@ -35,7 +38,8 @@ public class MyMailSender
 		lHelper.setFrom(pFrom);
 		lHelper.setTo(pTo);
 		lHelper.setSubject(pSubject);
-		lHelper.setText(pContent);
+		String lContentTransformed = this.mailContentBuilder.build(pContent, pLinkTo);
+		lHelper.setText(pContent, lContentTransformed);
 
 		String lCsvContents = this.createCsvContents();
 		ByteArrayResource lBAR = new ByteArrayResource(

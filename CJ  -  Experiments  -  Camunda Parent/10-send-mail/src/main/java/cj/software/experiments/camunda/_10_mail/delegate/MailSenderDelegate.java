@@ -38,16 +38,8 @@ public class MailSenderDelegate
 		String lTo = Objects.requireNonNull((String) pExecution.getVariable("To"));
 		String lSubject = Objects.requireNonNull((String) pExecution.getVariable("Subject"));
 		String lBody = Objects.requireNonNull((String) pExecution.getVariable("Body"));
-		lBody = this.extendBody(pExecution, lBody);
-		this.myMailSender.sendMail(lFrom, lTo, lSubject, lBody);
-	}
-
-	private String extendBody(DelegateExecution pExecution, String pSource)
-	{
-		StringBuilder lSB = new StringBuilder(pSource).append("\n\n\n");
-		lSB.append("please visit the following URL: ");
-		lSB.append(this.constructPath(pExecution));
-		return lSB.toString();
+		String lLinkTo = this.constructPath(pExecution);
+		this.myMailSender.sendMail(lFrom, lTo, lSubject, lBody, lLinkTo);
 	}
 
 	private String constructPath(DelegateExecution pExecution)
