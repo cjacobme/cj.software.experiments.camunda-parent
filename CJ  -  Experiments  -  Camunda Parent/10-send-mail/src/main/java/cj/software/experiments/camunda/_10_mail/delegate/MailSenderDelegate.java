@@ -45,22 +45,19 @@ public class MailSenderDelegate
 	private String constructPath(DelegateExecution pExecution)
 	{
 		URL lBaseUrl = this.configurationHolder.getAddtlUrl();
+		String lBusinessKey = pExecution.getBusinessKey();
 		String lResult = lBaseUrl
 				+ "app/tasklist/default/#/"
 				+ "?sorting=%5B%7B%22sortBy%22:%22priority%22,%22sortOrder%22:%22desc%22%7D%5D";
-		String lProcessInstanceId = pExecution.getProcessInstanceId();
 		Task lTask = this.taskService.createTaskQuery()
 				.taskDefinitionKey("UserTask_Watchout")
-				.processInstanceId(lProcessInstanceId)
+				.processInstanceBusinessKey(lBusinessKey)
 				.singleResult();
 		if (lTask != null)
 		{
 			String lTaskId = lTask.getId();
 			lResult += "&task=" + lTaskId;
-			this.logger.info(
-					"found task %s matching to proc inst id %s",
-					lTaskId,
-					lProcessInstanceId);
+			this.logger.info("found task %s matching to business id %s", lTaskId, lBusinessKey);
 		}
 		return lResult;
 	}

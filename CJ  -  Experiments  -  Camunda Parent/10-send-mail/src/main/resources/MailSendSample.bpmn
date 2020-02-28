@@ -3,11 +3,16 @@
   <bpmn:process id="Process_MailSendSample" name="Mail Send Sample" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Start">
       <bpmn:extensionElements>
-        <camunda:formData>
+        <camunda:formData businessKey="VorgangsID">
           <camunda:formField id="From" label="mail sender" type="string" />
           <camunda:formField id="To" label="mail receiver" type="string" />
           <camunda:formField id="Subject" label="Mail Subject" type="string" />
           <camunda:formField id="Body" label="Body" type="string" defaultValue="this is a sample mail" />
+          <camunda:formField id="VorgangsID" label="ID Geschäftsvorgang" type="string">
+            <camunda:properties>
+              <camunda:property id="required" value="true" />
+            </camunda:properties>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_0sf1tyi</bpmn:outgoing>
@@ -31,7 +36,13 @@
               <camunda:property id="readonly" value="true" />
             </camunda:properties>
           </camunda:formField>
+          <camunda:formField id="VorgangsId" label="ID Geschäftsvorgang" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true" />
+            </camunda:properties>
+          </camunda:formField>
         </camunda:formData>
+        <camunda:executionListener class="cj.software.experiments.camunda._10_mail.delegate.StoreVariableDelegate" event="start" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_134glvv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1iq2p17</bpmn:outgoing>
