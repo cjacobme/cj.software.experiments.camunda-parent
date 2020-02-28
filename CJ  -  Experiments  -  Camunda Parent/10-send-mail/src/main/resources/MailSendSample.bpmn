@@ -4,11 +4,11 @@
     <bpmn:startEvent id="StartEvent_1" name="Start">
       <bpmn:extensionElements>
         <camunda:formData businessKey="VorgangsID">
-          <camunda:formField id="From" label="mail sender" type="string" />
-          <camunda:formField id="To" label="mail receiver" type="string" />
-          <camunda:formField id="Subject" label="Mail Subject" type="string" />
+          <camunda:formField id="From" label="mail sender" type="string" defaultValue="cjacobme@aol.com" />
+          <camunda:formField id="To" label="mail receiver" type="string" defaultValue="cjacobme@aol.com" />
+          <camunda:formField id="Subject" label="Mail Subject" type="string" defaultValue="sample mail" />
           <camunda:formField id="Body" label="Body" type="string" defaultValue="this is a sample mail" />
-          <camunda:formField id="VorgangsID" label="ID Geschäftsvorgang" type="string">
+          <camunda:formField id="VorgangsID" label="ID Geschäftsvorgang" type="string" defaultValue="${idGenerator.generateId()}">
             <camunda:properties>
               <camunda:property id="required" value="true" />
             </camunda:properties>
