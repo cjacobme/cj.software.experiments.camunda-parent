@@ -34,12 +34,13 @@ public class MailSenderDelegate
 	@Override
 	public void execute(DelegateExecution pExecution) throws Exception
 	{
+		String lBusinessKey = pExecution.getBusinessKey();
 		String lFrom = Objects.requireNonNull((String) pExecution.getVariable("From"));
 		String lTo = Objects.requireNonNull((String) pExecution.getVariable("To"));
 		String lSubject = Objects.requireNonNull((String) pExecution.getVariable("Subject"));
 		String lBody = Objects.requireNonNull((String) pExecution.getVariable("Body"));
 		String lLinkTo = this.constructPath(pExecution);
-		this.myMailSender.sendMail(lFrom, lTo, lSubject, lBody, lLinkTo);
+		this.myMailSender.sendMail(lBusinessKey, lFrom, lTo, lSubject, lBody, lLinkTo);
 	}
 
 	private String constructPath(DelegateExecution pExecution)

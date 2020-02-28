@@ -29,8 +29,13 @@ public class MyMailSender
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	public void sendMail(String pFrom, String pTo, String pSubject, String pContent, String pLinkTo)
-			throws MessagingException,
+	public void sendMail(
+			String pBusinessKey,
+			String pFrom,
+			String pTo,
+			String pSubject,
+			String pContent,
+			String pLinkTo) throws MessagingException,
 			IOException
 	{
 		MimeMessage lMimeMessage = this.javaMailSender.createMimeMessage();
@@ -38,7 +43,7 @@ public class MyMailSender
 		lHelper.setFrom(pFrom);
 		lHelper.setTo(pTo);
 		lHelper.setSubject(pSubject);
-		String lContentTransformed = this.mailContentBuilder.build(pContent, pLinkTo);
+		String lContentTransformed = this.mailContentBuilder.build(pBusinessKey, pContent, pLinkTo);
 		lHelper.setText(pContent, lContentTransformed);
 
 		String lCsvContents = this.createCsvContents();

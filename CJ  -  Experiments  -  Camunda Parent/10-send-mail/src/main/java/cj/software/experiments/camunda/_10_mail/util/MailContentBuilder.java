@@ -11,11 +11,12 @@ public class MailContentBuilder
 	@Autowired
 	private TemplateEngine templateEngine;
 
-	public String build(String pMessage, String pLinkTo)
+	public String build(String pBusinessKey, String pMessage, String pLinkTo)
 	{
 		Context lCtx = new Context();
 		lCtx.setVariable("message", pMessage);
 		lCtx.setVariable("linkTo", pLinkTo);
+		lCtx.setVariable("businessKey", pBusinessKey);
 		String lResult = this.templateEngine.process("mailTemplate", lCtx);
 		return lResult;
 	}
