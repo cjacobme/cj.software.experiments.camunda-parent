@@ -29,5 +29,6 @@
 		<module>08-only-once</module>
 		<module>09-optimize</module>
 		<module>10-send-mail</module>
+		<module>11-dublicate-business-key</module>
 	</modules>
 </project>
