@@ -30,5 +30,6 @@
 		<module>09-optimize</module>
 		<module>10-send-mail</module>
 		<module>11-dublicate-business-key</module>
+		<module>12-messages-receiving</module>
 	</modules>
 </project>
