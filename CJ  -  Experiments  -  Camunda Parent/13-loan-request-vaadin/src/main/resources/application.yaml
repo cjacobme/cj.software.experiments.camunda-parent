@@ -1,0 +1,13 @@
+camunda.bpm:
+  admin-user:
+    id: kermit
+    password: kermit
+    firstName: Kermit
+  filter:
+    create: All tasks
+    
+#spring.datasource:
+#  url: jdbc:postgresql://localhost:5432/optimize
+#  driverClassName: org.postgresql.Driver
+#  username: optimize
+#  password: optimize

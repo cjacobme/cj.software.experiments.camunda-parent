@@ -31,5 +31,6 @@
 		<module>10-send-mail</module>
 		<module>11-dublicate-business-key</module>
 		<module>12-messages-receiving</module>
+		<module>13-loan-request-vaadin</module>
 	</modules>
 </project>
