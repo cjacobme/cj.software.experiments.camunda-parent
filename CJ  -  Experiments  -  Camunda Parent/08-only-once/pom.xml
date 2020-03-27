@@ -34,7 +34,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter-webapp-ee</artifactId>
+			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
 			<version>${camunda.spring-boot.version}</version>
 			<exclusions>
 				<exclusion>
