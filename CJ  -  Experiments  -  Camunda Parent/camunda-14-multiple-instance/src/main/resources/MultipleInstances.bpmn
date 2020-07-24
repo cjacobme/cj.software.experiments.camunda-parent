@@ -11,10 +11,9 @@
       <bpmn:outgoing>SequenceFlow_0nemfaa</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0nemfaa" sourceRef="StartEvent_1" targetRef="Task_Multiple" />
-    <bpmn:serviceTask id="Task_Multiple" name="Multiple" camunda:delegateExpression="${loggerDelegate}">
+    <bpmn:serviceTask id="Task_Multiple" name="Multiple" camunda:delegateExpression="${spawn}">
       <bpmn:incoming>SequenceFlow_0nemfaa</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1x6aubv</bpmn:outgoing>
-      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${entries}" camunda:elementVariable="entry" />
     </bpmn:serviceTask>
     <bpmn:endEvent id="EndEvent_15audas" name="Finish">
       <bpmn:incoming>SequenceFlow_1x6aubv</bpmn:incoming>
