@@ -32,5 +32,6 @@
 		<module>11-dublicate-business-key</module>
 		<module>12-messages-receiving</module>
 		<module>13-embedded-in-vaadin</module>
+		<module>camunda-14-multiple-instance</module>
 	</modules>
 </project>
