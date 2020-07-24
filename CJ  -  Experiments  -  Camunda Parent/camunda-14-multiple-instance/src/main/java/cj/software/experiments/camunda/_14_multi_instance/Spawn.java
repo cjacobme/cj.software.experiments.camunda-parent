@@ -59,6 +59,8 @@ public class Spawn
 			ProcessInstance lProcessInstance = Spawn.this.runtimeService.startProcessInstanceByKey(
 					"Process_Sub",
 					variables);
+			String procInstId = lProcessInstance.getProcessInstanceId();
+			Spawn.this.logger.info("spawned %d %s", this.counter, procInstId);
 		}
 
 	}
