@@ -32,7 +32,7 @@ public class Spawn
 			variables.put("Count", counter);
 			String entry = String.format("%02d", anzahl);
 			variables.put("entry", entry);
-			ProcessInstance lProcessInstance = Spawn.this.runtimeService.startProcessInstanceByKey(
+			ProcessInstance lProcessInstance = this.runtimeService.startProcessInstanceByKey(
 					"Process_Sub",
 					variables);
 			String procInstId = lProcessInstance.getProcessInstanceId();
