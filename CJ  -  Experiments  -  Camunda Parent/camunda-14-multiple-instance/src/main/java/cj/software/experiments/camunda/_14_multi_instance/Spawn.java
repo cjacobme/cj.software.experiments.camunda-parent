@@ -28,40 +28,15 @@ public class Spawn
 		long anzahl = (Long) pExecution.getVariable("Count");
 		for (long counter = 0; counter < anzahl; counter++)
 		{
-			Runnable runnable = new MyStarter(counter, anzahl);
-			Thread thread = new Thread(runnable);
-			thread.start();
-			this.logger.info("spawned sub %d", counter);
-		}
-	}
-
-	private class MyStarter
-			implements
-			Runnable
-	{
-		private long count;
-
-		private long counter;
-
-		MyStarter(long counter, long count)
-		{
-			this.counter = counter;
-			this.count = count;
-		}
-
-		@Override
-		public void run()
-		{
 			Map<String, Object> variables = new HashMap<>();
-			variables.put("Count", this.counter);
-			String entry = String.format("%02d", this.count);
+			variables.put("Count", counter);
+			String entry = String.format("%02d", anzahl);
 			variables.put("entry", entry);
 			ProcessInstance lProcessInstance = Spawn.this.runtimeService.startProcessInstanceByKey(
 					"Process_Sub",
 					variables);
 			String procInstId = lProcessInstance.getProcessInstanceId();
-			Spawn.this.logger.info("spawned %d %s", this.counter, procInstId);
+			this.logger.info("spawned %d %s", counter, procInstId);
 		}
-
 	}
 }
