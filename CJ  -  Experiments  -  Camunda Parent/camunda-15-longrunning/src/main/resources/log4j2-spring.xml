@@ -3,7 +3,7 @@
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout
-				pattern="%d %6p %30.30c{1} [%X{correlationId}] [%20.20t] %m%n" />
+				pattern="%d %6p %30.30c{1} [%40.40X{correlationId}] [%20.20t] %m%n" />
 		</Console>
 	</Appenders>
 

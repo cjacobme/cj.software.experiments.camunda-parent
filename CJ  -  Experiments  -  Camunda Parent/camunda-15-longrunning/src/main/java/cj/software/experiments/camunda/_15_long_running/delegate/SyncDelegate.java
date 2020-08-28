@@ -1,5 +1,8 @@
 package cj.software.experiments.camunda._15_long_running.delegate;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -14,6 +17,8 @@ public class SyncDelegate
 {
 	private Logger logger = LogManager.getFormatterLogger();
 
+	private static AtomicBoolean running = new AtomicBoolean(false);
+
 	@Override
 	public void execute(DelegateExecution execution) throws Exception
 	{
@@ -24,6 +29,24 @@ public class SyncDelegate
 			MDC.put(VariableNames.CORRELATION_ID, procInstId);
 
 			this.logger.info("sync invocation");
+			if (running.compareAndSet(false, true))
+			{
+				try
+				{
+					Long sleeptime = (Long) execution.getVariable(VariableNames.SLEEPTIME);
+					this.logger.info("start to sleep %d minutes...", sleeptime);
+					TimeUnit.MINUTES.sleep(sleeptime);
+					this.logger.info("woke up again");
+				}
+				finally
+				{
+					running.set(false);
+				}
+			}
+			else
+			{
+				throw new RuntimeException("already running");
+			}
 		}
 		finally
 		{

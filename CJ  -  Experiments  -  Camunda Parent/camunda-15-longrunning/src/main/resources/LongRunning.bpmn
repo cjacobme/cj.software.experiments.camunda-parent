@@ -6,6 +6,11 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_Sync" name="Process synchronously" isExecutable="true">
     <bpmn:startEvent id="StartEvent_Sync" name="Start">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="sleeptime" label="Wartezeit / min" type="long" defaultValue="7" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_1xr0rxa</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:endEvent id="EndEvent_Sync" name="End">
@@ -26,6 +31,11 @@
   </bpmn:process>
   <bpmn:process id="Process_Async" name="Background Processing" isExecutable="true">
     <bpmn:startEvent id="StartEvent_Async" name="Start">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="sleeptime" label="Wartezeit / min" type="long" defaultValue="7" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_08dnt9n</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_08dnt9n" sourceRef="StartEvent_Async" targetRef="Task_Async" />
