@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0t0xdlz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
+  <bpmn:process id="Process_ParallelUserTasks" name="Parallel User Tasks" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="anzahl" label="Anzahl" type="long" defaultValue="5" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0qkpwf9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0qkpwf9" sourceRef="StartEvent_1" targetRef="Task_SetupItems" />
+    <bpmn:sequenceFlow id="SequenceFlow_0hppwkz" sourceRef="Task_MultiParallel" targetRef="Task_0evq7l7" />
+    <bpmn:endEvent id="EndEvent_1p98i00">
+      <bpmn:incoming>SequenceFlow_1s22zbv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1muc114" sourceRef="Task_SetupItems" targetRef="Task_MultiParallel" />
+    <bpmn:serviceTask id="Task_SetupItems" name="Setup Items" camunda:delegateExpression="${setupList}">
+      <bpmn:incoming>SequenceFlow_0qkpwf9</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1muc114</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1s22zbv" sourceRef="Task_0evq7l7" targetRef="EndEvent_1p98i00" />
+    <bpmn:serviceTask id="Task_0evq7l7" name="Log Finished" camunda:delegateExpression="${simpleLogger}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="message">finished</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0hppwkz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1s22zbv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_MultiParallel" name="Multiple Parallel Processing">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="item" label="Item" type="long" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1muc114</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0hppwkz</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${items}" camunda:elementVariable="item" />
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_ParallelUserTasks">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qkpwf9_di" bpmnElement="SequenceFlow_0qkpwf9">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0hppwkz_di" bpmnElement="SequenceFlow_0hppwkz">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="580" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1p98i00_di" bpmnElement="EndEvent_1p98i00">
+        <dc:Bounds x="742" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1muc114_di" bpmnElement="SequenceFlow_1muc114">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1yft529_di" bpmnElement="Task_SetupItems">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s22zbv_di" bpmnElement="SequenceFlow_1s22zbv">
+        <di:waypoint x="680" y="117" />
+        <di:waypoint x="742" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0x3t95v_di" bpmnElement="Task_0evq7l7">
+        <dc:Bounds x="580" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1f38qks_di" bpmnElement="Task_MultiParallel">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
